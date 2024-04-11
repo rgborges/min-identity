@@ -15,4 +15,8 @@ export class User {
             this.email = email;
             this.surName = surName;
       }
+
+      attachExternalId(uuid: Guid) {
+            this.id = uuid;
+      }
 }

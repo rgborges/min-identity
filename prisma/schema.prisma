@@ -14,22 +14,22 @@ datasource db {
 }
 
 model User {
-      id    Int   @id @default(autoincrement())
+      id    String  @id @default(uuid())
       fullname String @unique
       email String @unique
-      locked Boolean
+      locked Boolean @default(false)
 }
 
 model Area {
-      id    Int   @id @default(autoincrement())
+      id    String   @id @default(uuid())
       name  String
       permissions Permissions[]
 }
 
 model Permissions {
-      id Int @id @default(autoincrement())
+      id  String @id @default(uuid())
       name String
 
-      areaId Int @unique
+      areaId String @unique
       area Area? @relation(fields: [areaId], references: [id])
 }
