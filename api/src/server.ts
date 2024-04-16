@@ -35,6 +35,12 @@ app.get('/api/users', (request, reply) => {
       //implement repository read      
 })
 
+//Summary
+//register a new application to the system. The user needs to be the administrator or contributor
+//in order to do that.
+app.post('/api/v1/applications', (request, reply) => {
+
+})
 app.listen({
       port: PORT,
 }).then(() => {
