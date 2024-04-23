@@ -27,7 +27,8 @@ export class userRepository {
                   console.log(err);
             }
       }
-
-
+      async get() : Promise<Object[]> {
+            return await this.db.user.findMany();
+      }
 
 }

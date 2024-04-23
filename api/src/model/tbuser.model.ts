@@ -1,5 +1,6 @@
 import { Guid } from "guid-typescript";
 import { geteuid } from "process";
+import { Roles } from "./roles";
 
 export class User {
       id: Guid;
@@ -15,14 +16,10 @@ export class User {
             this.surName = surName;
             this.role = role;
       }
-
+/**
+ * Attach the ID returned from the database.
+ */
       attachExternalId(uuid: Guid) {
             this.id = uuid;
       }
-
-}
-
-enum Roles {
-      ADMIN,
-      USER
 }
