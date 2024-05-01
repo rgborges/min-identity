@@ -3,7 +3,7 @@ import { User } from "../model/tbuser.model";
 import { Guid } from "guid-typescript";
 
 
-export class userRepository {
+export class UserRespository {
       db: PrismaClient;
       constructor(db: PrismaClient) {
             this.db = db;

@@ -7,31 +7,32 @@ export interface IResult {
       errors?: string[];
 }
 
-export class result {
-      ok(): Dummy {
-            return new Dummy({ type: "Ok", result: "success" });
+export interface IOkResult {
+     data?: Object  
+}
+
+export interface IErrorResult {
+      error?: string[];
+      data?: Object;
+}
+
+export class createResult {
+      ok(okResult: IOkResult): IResult  {
+            return { type: "OkResult", result: "Success", data: okResult.data };
       }
-      fail(err: string[]) {
-            return new Dummy({type: "Faild", result: "faild", errors: err});
+      fail(errorResult: IErrorResult) : IResult {
+            return { type: "ErrorResult", result: "Error", errors: errorResult.error, data: errorResult.data};
       }
 
 }
 class TT {
       test(): void {
-            const r = new result().fail(["there are to many data"]);
+           const t = new createResult().fail({
+              data: { message: 'this'},
+              error: ['Validation error 1', 'validation error 2']
+           }) 
       }
 }
-
-class Dummy {
-      result: IResult;
-      constructor(result: IResult) {
-            this.result = result;
-      }
-      with(data: Object): IResult {
-            this.result.data = data;
-            return this.result;
-      }
-      toResult() : IResult {
-            return this.result;
-      }
+export enum ResultTypes {
+      OkResult = "OkResult"
 }
