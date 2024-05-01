@@ -1,6 +1,5 @@
 GET http://localhost:3030/
 
-
 ###
 POST http://localhost:3030/api/settings/users
 Content-Type: application/json
@@ -10,7 +9,8 @@ Content-Type: application/json
       "name" : "Erik",
       "surName" : "Evans"
 }
-
-
 ###
 GET http://localhost:3030/api/v1/users
+
+###
+GET http://localhost:3030/
