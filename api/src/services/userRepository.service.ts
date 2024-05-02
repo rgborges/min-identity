@@ -19,7 +19,7 @@ export class UserRespository {
                         }
                   })
 
-                  user.id = Guid.parse(newUser.id); 
+                  user.id = Guid.parse(newUser.id);
 
                   return user;
 
@@ -27,8 +27,37 @@ export class UserRespository {
                   console.log(err);
             }
       }
-      async get() : Promise<Object[]> {
+      async get(): Promise<Object[]> {
             return await this.db.user.findMany();
       }
 
+      async getByEmail(searchedEmail: string): Promise<any> {
+            try {
+                  const data = await this.db.user.findUnique({
+                        where: {
+                              email: searchedEmail
+                        }
+                  })
+                  return data;
+
+            } catch (err) {
+                  console.log(err)
+            }
+
+      }
+
+      async getById(id: string): Promise<any> {
+            try {
+                  const data = await this.db.user.findUnique({
+                        where: {
+                              id: id 
+                        }
+                  })
+                  return data;
+
+            } catch (err) {
+                  console.log(err)
+            }
+
+      }
 }

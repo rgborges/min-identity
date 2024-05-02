@@ -47,6 +47,9 @@ Allows you to create an account in the system based in your e-mail address, and 
             "fullname": "Thiago Lenk Gwankman ",
             "email": "thiago@minidentity.com",
             "password": "384223o4ihh4ih545h90jkj",
+            "organizations": {
+                  "domain": "acme.me"
+            },
             "locked": false,
             "role": "ADMIN" 
       }
@@ -60,14 +63,28 @@ Allows you to create an account in the system based in your e-mail address, and 
 }
 ```
 
-Getting an information of a specified account:
-`POST` `/api/v1/{id_account}`
+## Organization
 
+A owner can create a new organization.
+
+
+Getting an information of a specified account:
+`GET` `/api/v1/organizations/{id_organization}`
 ```json
 {
       "appTitle" : "my-cloud-app",
 }
 ```
+
+`POST` `api/v1/organizations`
+**Body**
+```json
+{
+      "domain": "acme.me",
+      "ownerId": "932hj4-34u095-noh34h-3442"
+}
+```
+
 Get application
 `POST` `/api/v1/{id_account}/{id_app}/`
 

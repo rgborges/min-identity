@@ -29,9 +29,9 @@ enum Role {
 model Organization {
       id String @id @default(uuid())
       domainName String @unique
-      userId String @unique
+      ownerId String @unique
 
-      owner User? @relation(fields: [userId], references: [id])
+      owner User? @relation(fields: [ownerId], references: [id])
       applications Application[]
 }
 

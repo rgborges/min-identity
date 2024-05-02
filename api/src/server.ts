@@ -86,6 +86,35 @@ app.post('/api/v1/login', async (request, reply) => {
 
 
 })
+
+
+//organization registration 
+ app.post('/api/v1/organizations', async (request, reply) => {
+   const repository = new UserRespository(prisma);
+   
+   //check the user requesting
+   let userCheckSchema = z.object({
+      userId: z.string()
+   });
+
+   const {userId} = userCheckSchema.parse(request.body);
+
+   if (userId === undefined)
+   {
+      //return an error
+      return;
+   }
+   const owner = await repository.getById(userId) as User;
+
+   if (owner === undefined){
+      return;
+   }
+
+   //create an organization
+   //.... use the migrate
+   reply.send({message: 'ok' })
+}) 
+
 app.get('/test/error', (request, reply) => {
       const result = new createResult().fail({
             error: ['validation error sample 1', 'validation error sample 2']
