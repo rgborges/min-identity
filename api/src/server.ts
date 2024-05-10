@@ -1,15 +1,21 @@
 import fastify from "fastify";
-import { UserRespository } from "./services/userRepository.service";
+import { UserRespository } from "./repositories/userRepository";
 import { PrismaClient } from "@prisma/client";
 import { prisma } from "./db/prisma";
-import { User } from "./model/tbuser.model";
-import { z } from "zod";
+import { User } from "./model/user.model";
+import { string, z } from "zod";
 import { cachedDataVersionTag } from "v8";
 import { Roles } from "./model/roles";
 import { createResult } from "./result/result.model";
+import { createSession } from "./model/session.model";
+import { Settings } from "http2";
+import { encodeSession } from "./services/token.service";
 
 const PORT = 3030;
-const app = fastify();
+const TOKEN_SECRET = process.env.TOKEN_SECRET;
+const app = fastify({
+      logger: true
+});
 
 
 
@@ -31,7 +37,9 @@ app.register(require('@fastify/swagger-ui'), {
       },
       staticCSP: true,
 })
-
+/*
+Create admin users to manage the identity server.
+*/
 app.post('/api/v1/admin/users', {
       schema: {
 
@@ -48,17 +56,61 @@ app.post('/api/v1/admin/users', {
 
       const incomeUser = new User(name, surName, email, Roles.ADMIN);
 
+      
+      
       try {
             const result = await repository.insertUser(incomeUser)
             return reply.status(200).send({ message: 'OK', res: result })
       } catch (err) {
             return reply.status(500).send({ message: err })
       }
+})
+/*
+
+*/
+//organization registration 
+app.post('/api/v1/admin/organizations', async (request, reply) => {
+      //1- receive the token via headers and validate
+      
+      const repository = new UserRespository(prisma);
+
+      //check the user requesting
+      let userCheckSchema = z.object({
+            userId: z.string()
+      });
+
+      const { userId } = userCheckSchema.parse(request.body);
+
+      if (userId === undefined) {
+            //return an error
+            return;
+      }
+      const owner = await repository.getById(userId) as User;
+
+      if (owner === undefined) {
+            return;
+      }
+
+      //create an organization
+      //.... use the migrate
+      reply.send({ message: 'ok' })
+})
+
+
+/*
+Create user directories based in an organization.
+*/
+app.post('/api/v1/admin/directories', (request, reply) => {
 
 })
 
 
-app.post('/api/v1/login', async (request, reply) => {
+app.get('/api/v1/secret', (request, reply) => {
+
+      console.log(process.env.TOKEN_SECRET)
+      return process.env.TOKEN_SECRET;
+})
+app.post('/api/v1/auth', async (request, reply) => {
       //check if the user exists on database
       const repository = new UserRespository(prisma);
       const search = await repository.get();
@@ -68,52 +120,32 @@ app.post('/api/v1/login', async (request, reply) => {
 
       const { email } = createLinkSchema.parse(request.body);
       for (let user of search) {
-            let tUSer = user as User;
+            let typedUser = user as User;
 
-            if (tUSer.email == email) {
-                 return reply.send(new createResult().ok({
-                  data: {
-                        authenticated: true,
-                        email: tUSer.email
-                  }
-                 }))
+            if (typedUser.email == email) {
+                  const tokenSecret = new String(process.env.TOKEN_SECRET); 
+                  const session = new createSession()
+                        .create(tokenSecret, typedUser.email);
+
+                  const token = encodeSession(tokenSecret.toString(), session);                   
+                  
+                  return reply.send(new createResult().ok({
+                        data: {
+                              email: typedUser.email,
+                              authenticated: true,
+                              session: token
+                        }
+                  }))
             }
       }
-    
+
       return reply.status(404).send(new createResult().fail({
-            error: ['Faild to authenticate']
+            error: ['username or password is not correct. faild to authenticate']
       }))
-
-
 })
 
 
-//organization registration 
- app.post('/api/v1/organizations', async (request, reply) => {
-   const repository = new UserRespository(prisma);
-   
-   //check the user requesting
-   let userCheckSchema = z.object({
-      userId: z.string()
-   });
 
-   const {userId} = userCheckSchema.parse(request.body);
-
-   if (userId === undefined)
-   {
-      //return an error
-      return;
-   }
-   const owner = await repository.getById(userId) as User;
-
-   if (owner === undefined){
-      return;
-   }
-
-   //create an organization
-   //.... use the migrate
-   reply.send({message: 'ok' })
-}) 
 
 app.get('/test/error', (request, reply) => {
       const result = new createResult().fail({

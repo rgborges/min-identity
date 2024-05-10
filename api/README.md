@@ -80,10 +80,24 @@ Getting an information of a specified account:
 **Body**
 ```json
 {
-      "domain": "acme.me",
+      "id": "987342iyo423iy9084983uiu43",
+      "domain": "minidentity.net",
       "ownerId": "932hj4-34u095-noh34h-3442"
 }
 ```
+
+When you create an organization, a user and group directory is also created:
+
+domain.net
+      USERS/
+GROUPS/
+
+
+`POST` `api/v1/organizations/{organization_id}/users`
+Insert an user into the organization directory
+
+`POST` `api/v1/organizations/{organization_id}/groups`
+Insert an group into the organization directory
 
 Get application
 `POST` `/api/v1/{id_account}/{id_app}/`

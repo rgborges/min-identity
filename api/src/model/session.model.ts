@@ -1,8 +1,11 @@
+import { Guid } from "guid-typescript";
+import { date } from "zod";
+
 export interface ISession {
        id: String;
        username: String;
-       createdAt: number;
-       expiresAt: number;
+       createdAt?: number;
+       expiresAt?: number;
 }
 
 
@@ -22,3 +25,12 @@ export type DecodeResult =
 }
 
 export type ExpirationStatus = "expired" | "active" | "grace";
+
+export class createSession {
+      create(secret: String, username: string) : ISession {
+            return {
+                  id: Guid.create().toString(),
+                  username: username,
+            };
+      }
+}

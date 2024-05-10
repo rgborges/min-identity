@@ -1,5 +1,5 @@
 import { config } from "process";
-import { User } from "./tbuser.model";
+import { User } from "./user.model";
 
 export class userFactory {
 

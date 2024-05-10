@@ -9,7 +9,7 @@ export class User {
       email: string;
       role: Roles;
       
-      constructor(name: string, surName: string, email: string, role: Roles = Roles.USER) {
+      constructor(name: string, surName: string, email: string, role: Roles) {
             this.id = Guid.create();
             this.name = name;
             this.email = email;

@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
-import { User } from "../model/tbuser.model";
+import { User } from "../model/user.model";
 import { Guid } from "guid-typescript";
+import { Roles } from "../model/roles";
 
 
 export class UserRespository {
@@ -15,7 +16,8 @@ export class UserRespository {
                         data: {
                               fullname: user.name + ' ' + user.surName,
                               email: user.email,
-                              locked: false
+                              locked: false,
+                              role: user.role == Roles.ADMIN ? "ADMIN" : "USER"
                         }
                   })
 
