@@ -1,6 +1,7 @@
 GET http://localhost:3030/
 
 ###
+//Insert a new root user
 POST http://localhost:3030/api/v1/admin/users
 Content-Type: application/json
 
@@ -10,6 +11,14 @@ Content-Type: application/json
       "surName" : "Evans"
 }
 ###
+//Insert a new organization
+POST http://localhost:3030/api/v1/organizations/
+Content-Type: application/application/json
+Authorization: Bearer 
+{
+      "ownerId": "0324-3jdsjfkdjf",
+      "domain": "minidentity.net"
+}
 GET http://localhost:3030/api/v1/users
 ###
 GET http://localhost:3030/test/error

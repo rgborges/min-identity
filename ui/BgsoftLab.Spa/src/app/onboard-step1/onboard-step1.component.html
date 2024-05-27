@@ -1,0 +1,48 @@
+<div class="flex justify-center items-center h-screen">
+      <div class="p-10 rounded-lg shadow-md w-2/4 bg-slate-900 animate-fadeInWidth">
+            <br>
+            <hr>
+            <br>
+            <h1 class="text-2xl font-semibold mb-4">Onboarding Session</h1>
+            <p class="font-light">Set your name and other personal information</p>
+            <br>
+            <div>
+                  <form action="">
+                        <div class="font-bold mb-4">
+                              <label for="email" class="block text-white text-sm mb-2">Full Name</label>
+                              <input placeholder="Enter your full name"
+                                    class=" text-sm text-black mt-1 p-1 pl-3 w-full border rounded-lg" type="text">
+                        </div>
+                        <div class="font-bold mb-4 w-full">
+                              <label for="age" class="block text-white text-sm mb-2">Age</label>
+                              <input placeholder="Enter your age"
+                                    class="text-sm text-black mt-1 p-1 pl-3 w-full border rounded-lg" type="number">
+                        </div>
+                        <div class="flex gap-5 justify-between">
+                              <div class="font-bold mb-4 w-full">
+                                    <label for="dropdown" class="block text-white text-sm mb-2">Select your
+                                          role:</label>
+                                    <select id="dropdown" [(ngModel)]="selectedOption"
+                                          class="rounded-lg w-full p-2 bg-black text-white"
+                                          aria-placeholder="select your role">
+                                          <option class="text-sm bg-black text-white" *ngFor="let option of roleOptions"
+                                                [value]="option">{{option}}</option>
+                                    </select>
+                              </div>
+                              <div class="font-bold mb-4 w-full">
+                                    <label class="block" id="experience">How much years of exeperience:</label>
+                                    <input class="text-black w-auto" id="experience" class="rounded-lg w-full p-2 bg-black text-white"
+                                          type="number" placeholder="years of experience">
+                              </div>
+                        </div>
+                        <div class="flex justify-between gap-4">
+                              <a class="w-full bg-yellow-300 text-black py-2 px-4 rounded-lg hover:bg-black hover:text-white transition duration-300"
+                                    routerLinkActive="activate" routerLink="/onb-step1">Previous</a>
+                              <a class="w-full bg-yellow-300 text-black py-2 px-4 rounded-lg hover:bg-black hover:text-white transition duration-300"
+                                    routerLinkActive="activate" routerLink="/router">Finish</a>
+                        </div>
+                  </form>
+            </div>
+      </div>
+</div>
+<router-outlet></router-outlet>

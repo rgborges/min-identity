@@ -12,12 +12,11 @@ export class UserRespository {
 
       async insertUser(user: User) {
             try {
-                  const newUser = await this.db.user.create({
+                  const newUser = await this.db.rootUsers.create({
                         data: {
                               fullname: user.name + ' ' + user.surName,
                               email: user.email,
                               locked: false,
-                              role: user.role == Roles.ADMIN ? "ADMIN" : "USER"
                         }
                   })
 
@@ -30,12 +29,12 @@ export class UserRespository {
             }
       }
       async get(): Promise<Object[]> {
-            return await this.db.user.findMany();
+            return await this.db.rootUsers.findMany();
       }
 
       async getByEmail(searchedEmail: string): Promise<any> {
             try {
-                  const data = await this.db.user.findUnique({
+                  const data = await this.db.rootUsers.findUnique({
                         where: {
                               email: searchedEmail
                         }
@@ -50,7 +49,7 @@ export class UserRespository {
 
       async getById(id: string): Promise<any> {
             try {
-                  const data = await this.db.user.findUnique({
+                  const data = await this.db.rootUsers.findUnique({
                         where: {
                               id: id 
                         }

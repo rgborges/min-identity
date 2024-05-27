@@ -1,0 +1,41 @@
+<div class="flex justify-center items-center h-screen">
+      <div class="p-10 rounded-lg shadow-md w-96 bg-slate-900">
+            <div class="flex">
+                  <button
+                        class="bg-black text-white px-3 py-2 rounded-lg w-full hover:text-yellow-300 m-3">Google</button>
+                  <button class="bg-black text-white px-3 py-2 rounded-lg w-full hover:text-yellow-300 m-3">Linked
+                        In</button>
+            </div>
+            <br>
+            <hr>
+            <br>
+            <h1 class="text-2xl font-semibold mb-4">Onboarding Session</h1>
+            <p class="font-light">Let get started on creating your profile. This is your first steps to a new knowledge
+                  management journey ⚡</p>
+            <br>
+            <div>
+                  <form action="">
+                        <div class="font-bold mb-4">
+                              <label for="email" class="block text-white text-sm mb-2">Email</label>
+                              <input placeholder="Enter your e-mail"
+                                    class=" text-sm text-black mt-1 p-1 pl-3 w-full border rounded-lg" type="text">
+                        </div>
+                        <div class="font-bold mb-4 w-full">
+                              <label for="password" class="block text-white text-sm mb-2">Password</label>
+                              <input placeholder="Enter your password"
+                                    class="text-sm text-black mt-1 p-1 pl-3 w-full border rounded-lg" type="password">
+                        </div>
+                        <div class="font-semibold mb-2 flex-row">
+                              <input type="checkbox" class="ml-3">
+                              <label for=""><a href="" class="text-pink-500 p-2">forget your password</a></label>
+                        </div>
+                        <div class="flow gap-4 my-4">
+                              <a class="w-full bg-yellow-300 text-black py-2 px-4 rounded-lg hover:bg-black hover:text-white transition duration-300"
+                                    routerLink="/onb-step2">Next</a>
+
+                        </div>
+                  </form>
+            </div>
+      </div>
+</div>
+<router-outlet></router-outlet>

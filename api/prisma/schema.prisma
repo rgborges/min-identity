@@ -7,44 +7,58 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id            String        @id @default(uuid())
-  fullname      String        @unique
-  email         String        @unique
-  locked        Boolean       @default(false)
-  role          Role          @default(USER)
-  organizations Organization?
+model RootUsers {
+  id            String         @id @default(uuid())
+  fullname      String         @unique
+  email         String         @unique
+  locked        Boolean        @default(false)
+  createdAt     DateTime       @default(now())
+  organizations Organizations?
 }
 
-model Organization {
-  id           String       @id @default(uuid())
-  domainName   String       @unique
-  ownerId      String       @unique
-  applications Application?
-  owner        User         @relation(fields: [ownerId], references: [id])
+model Organizations {
+  id           String        @id @default(uuid())
+  domainName   String        @unique
+  ownerId      String        @unique
+  createdAt    DateTime      @default(now())
+  applications Applications?
+  groups       Groups?
+  owner        RootUsers     @relation(fields: [ownerId], references: [id])
+  users        Users?
 }
 
-model Application {
-  id             String       @id @default(uuid())
-  title          String       @unique
-  organizationId String       @unique
-  organization   Organization @relation(fields: [organizationId], references: [id])
+model Users {
+  id              String        @id @default(uuid())
+  fullname        String        @unique
+  email           String        @unique
+  locked          Boolean       @default(false)
+  createdAt       DateTime      @default(now())
+  organizationsId String        @unique
+  organization    Organizations @relation(fields: [organizationsId], references: [id])
+  groups          Groups[]      @relation("GroupsToUsers")
 }
 
-model Area {
-  id          String       @id @default(uuid())
-  name        String
-  permissions Permissions?
+model Groups {
+  id             String        @id @default(uuid())
+  title          String
+  organizationId String        @unique
+  permissionId   String        @unique
+  createdAt      DateTime      @default(now())
+  organization   Organizations @relation(fields: [organizationId], references: [id])
+  permission     Permissions   @relation(fields: [permissionId], references: [id])
+  users          Users[]       @relation("GroupsToUsers")
+}
+
+model Applications {
+  id             String        @id @default(uuid())
+  title          String        @unique
+  createdAt   DateTime @default(now())
+  organizationId String        @unique
+  organization   Organizations @relation(fields: [organizationId], references: [id])
 }
 
 model Permissions {
-  id     String @id @default(uuid())
-  name   String
-  areaId String @unique
-  area   Area   @relation(fields: [areaId], references: [id])
-}
-
-enum Role {
-  USER
-  ADMIN
+  id     String  @id @default(uuid())
+  claims String
+  Groups Groups?
 }

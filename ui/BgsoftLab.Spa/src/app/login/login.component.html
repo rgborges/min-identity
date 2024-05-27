@@ -1,0 +1,31 @@
+<div class="flex items-center justify-center h-screen p-4">
+      <div class="bg-zinc-950 rounded-2xl px-8 py-8 shadow-md">
+            <h2 class="text-center text-sm font-semibold mb-6">Login</h2>
+            <div>
+                  <form #loginForm="ngForm" onsubmit="login()" autocomplete="off">
+                        <div class="mb-4">
+                              <label class="block text-white text-sm font-bold mb-2">
+                                    Username
+                              </label>
+                              <input type="text"
+                                    class="border rounded-md w-full shadow px-2 py-1 bg-transparent border-zinc-900 text-white" />
+                        </div>
+                        <div class="mb-4">
+                              <label class="block text-white text-sm font-bold mb-2">
+                                    Password
+                              </label>
+                              <input type="password"
+                                    class="border rounded-md w-full shadow px-2 py-1 bg-transparent border-zinc-900 text-white" />
+                        </div>
+                        <div class="mb-4">
+                              <button type="submit" class="w-full bg-lime-200 py-2 text-black rounded-lg text-sm font-semibold">
+                                    Login
+                              </button>
+                        </div>
+                        <div class="mb-2">
+                              <a href="" class="text-zinc-700">Forgot your password?</a>
+                        </div>
+                  </form>
+            </div>
+      </div>
+</div>

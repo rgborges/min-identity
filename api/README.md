@@ -1,5 +1,6 @@
 # Identity Server
 I'm developing a personal identity application.
+
 ## Endpoints
 
 ### Results 
@@ -21,7 +22,7 @@ The results is the data main unit for the systems operations.
 ```json
 {
       "id": "230948234239ug43",
-      "resul" : {
+      "result" : {
             "type": "faild",
             "messages": [
                   "validation filed 01 with error",
